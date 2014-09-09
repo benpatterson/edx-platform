@@ -1,6 +1,7 @@
 # pylint: disable=C0111
 import datetime
 import os
+import time
 import pytz
 from django.conf import settings
 from mock import patch
@@ -262,6 +263,10 @@ def check_progress(_step, text):
 
 @step('I see graph with total progress "([^"]*)"$')
 def see_graph(_step, progress):
+    # the graphh can take a second to render.
+    # TODO: put a proper wait statement in here instead
+    # of a sleep
+    time.sleep(1)
     selector = 'grade-detail-graph'
     xpath = '//div[@id="{parent}"]//div[text()="{progress}"]'.format(
         parent=selector,
