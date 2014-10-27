@@ -612,7 +612,11 @@ class TestGradeReportConditionalContent(TestReportMixin, TestIntegrationTask):
         with open(report_store.path_to(self.course.id, report_csv_filename)) as csv_file:
             csv_rows = [row for row in csv.DictReader(csv_file)]
             for row_subset in user_data:
-                self.assertTrue(any(is_dict_subset(row_subset, row) for row in csv_rows))
+                # self.assertTrue(any(is_dict_subset(row_subset, row) for row in csv_rows))
+                # DEBUG JENKINS: below assertion is temporary
+                # (expected to fail) to figure out why tests are
+                # failing
+                self.assertEqual(csv_rows, user_data)
 
     def test_both_groups_problems(self):
         """
