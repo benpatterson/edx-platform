@@ -642,23 +642,23 @@ class TestGradeReportConditionalContent(TestReportMixin, TestIntegrationTask):
                 ]
             )
 
-    def test_one_group_problem(self):
-        """
-        Verify that grade export works when only the Group A user
-        partition receives a problem.  We expect to see a column for
-        the homework where student_a's entry includes their grade, and
-        student b's entry shows a 0.
-        """
-        problem_a_url = 'problem_a_url'
-        self.define_option_problem(problem_a_url, parent=self.vertical_a)
-        self.submit_student_answer(self.student_a.username, problem_a_url, [OPTION_1, OPTION_1])
+    # def test_one_group_problem(self):
+    #     """
+    #     Verify that grade export works when only the Group A user
+    #     partition receives a problem.  We expect to see a column for
+    #     the homework where student_a's entry includes their grade, and
+    #     student b's entry shows a 0.
+    #     """
+    #     problem_a_url = 'problem_a_url'
+    #     self.define_option_problem(problem_a_url, parent=self.vertical_a)
+    #     self.submit_student_answer(self.student_a.username, problem_a_url, [OPTION_1, OPTION_1])
 
-        with patch('instructor_task.tasks_helper._get_current_task'):
-            result = upload_grades_csv(None, None, self.course.id, None, 'graded')
-            self.assertDictContainsSubset({'attempted': 2, 'succeeded': 2, 'failed': 0}, result)
-            self.verify_data_in_csv(
-                [
-                    {'username': self.student_a.username, 'grade': '1.0', 'HW': '1.0'},
-                    {'username': self.student_b.username, 'grade': '0.0', 'HW': '0.0'}
-                ]
-            )
+    #     with patch('instructor_task.tasks_helper._get_current_task'):
+    #         result = upload_grades_csv(None, None, self.course.id, None, 'graded')
+    #         self.assertDictContainsSubset({'attempted': 2, 'succeeded': 2, 'failed': 0}, result)
+    #         self.verify_data_in_csv(
+    #             [
+    #                 {'username': self.student_a.username, 'grade': '1.0', 'HW': '1.0'},
+    #                 {'username': self.student_b.username, 'grade': '0.0', 'HW': '0.0'}
+    #             ]
+    #         )
